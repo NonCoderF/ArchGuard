@@ -2,6 +2,7 @@ package com.archguard.gradle
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
+import org.gradle.work.DisableCachingByDefault
 import com.archguard.core.architecture.ArchGuardEngine
 import com.archguard.core.architecture.ConsoleReportGenerator
 import com.archguard.core.architecture.HtmlReportGenerator
@@ -15,6 +16,7 @@ import java.nio.file.Files
  * implemented. Keeping the task action here gives consumers a stable Gradle
  * entry point today.
  */
+@DisableCachingByDefault(because = "The task reads the current project state and writes reports into the project directory.")
 abstract class ArchitectureCheckTask : DefaultTask() {
     @TaskAction
     fun checkArchitecture() {

@@ -2,8 +2,8 @@ plugins {
     kotlin("jvm") version "2.2.0" apply false
 }
 
-group = "com.archguard"
-version = "0.1.0-SNAPSHOT"
+group = "io.github.noncoderf.archguard"
+version = "0.1.1"
 
 allprojects {
     repositories {

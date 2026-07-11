@@ -19,7 +19,7 @@ class ArchGuardPluginFunctionalTest {
         projectDirectory.toPath().resolve("build.gradle.kts").writeText(
             """
             plugins {
-                id("com.archguard.plugin")
+                id("io.github.noncoderf.archguard.gradle")
             }
 
             archGuard {

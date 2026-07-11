@@ -1,9 +1,10 @@
 plugins {
     kotlin("jvm") version "2.2.0"
+    `maven-publish`
 }
 
-group = "com.archguard"
-version = "0.1.0-SNAPSHOT"
+group = "io.github.noncoderf.archguard"
+version = "0.1.3"
 
 java {
     toolchain {
@@ -25,4 +26,12 @@ kotlin {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+        }
+    }
 }

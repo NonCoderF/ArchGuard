@@ -1,0 +1,56 @@
+<svg width="1200" height="820" viewBox="0 0 1200 820" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ArchGuard HTML report screenshot">
+  <defs>
+    <linearGradient id="page" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#eef2ff"/>
+      <stop offset="45%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+    <linearGradient id="hero" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="820" rx="28" fill="#dbe4f0"/>
+  <rect x="30" y="30" width="1140" height="760" rx="24" fill="url(#page)" stroke="#cbd5e1" stroke-width="2"/>
+  <rect x="70" y="70" width="1060" height="220" rx="28" fill="url(#hero)" stroke="#d9e2ec"/>
+  <text x="112" y="126" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#64748b" letter-spacing="3">ARCHGUARD</text>
+  <text x="112" y="176" font-family="Segoe UI, Arial, sans-serif" font-size="48" fill="#111827" font-weight="700">Architecture Report</text>
+  <text x="112" y="224" font-family="Segoe UI, Arial, sans-serif" font-size="20" fill="#475569">Filesystem validation for sample-project</text>
+
+  <rect x="112" y="260" width="180" height="88" rx="18" fill="#ffffff" stroke="#d9e2ec"/>
+  <rect x="312" y="260" width="180" height="88" rx="18" fill="#ffffff" stroke="#d9e2ec"/>
+  <rect x="512" y="260" width="180" height="88" rx="18" fill="#ffffff" stroke="#d9e2ec"/>
+  <rect x="712" y="260" width="180" height="88" rx="18" fill="#ffffff" stroke="#d9e2ec"/>
+  <text x="132" y="294" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#64748b" letter-spacing="2">FEATURES FOUND</text>
+  <text x="132" y="332" font-family="Segoe UI, Arial, sans-serif" font-size="32" fill="#111827" font-weight="700">2</text>
+  <text x="332" y="294" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#64748b" letter-spacing="2">PASSED</text>
+  <text x="332" y="332" font-family="Segoe UI, Arial, sans-serif" font-size="32" fill="#15803d" font-weight="700">1</text>
+  <text x="532" y="294" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#64748b" letter-spacing="2">FAILED</text>
+  <text x="532" y="332" font-family="Segoe UI, Arial, sans-serif" font-size="32" fill="#b42318" font-weight="700">1</text>
+  <text x="732" y="294" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#64748b" letter-spacing="2">VIOLATIONS</text>
+  <text x="732" y="332" font-family="Segoe UI, Arial, sans-serif" font-size="32" fill="#111827" font-weight="700">1</text>
+
+  <rect x="70" y="320" width="520" height="390" rx="26" fill="#ffffff" stroke="#d9e2ec"/>
+  <text x="100" y="372" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#111827" font-weight="700">Feature Checks</text>
+  <rect x="100" y="402" width="110" height="28" rx="14" fill="#dcfce7"/>
+  <text x="155" y="422" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#15803d" font-weight="700">Passed</text>
+  <text x="100" y="460" font-family="Segoe UI, Arial, sans-serif" font-size="20" fill="#334155" font-weight="600">login</text>
+  <text x="100" y="490" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#64748b">All required folders are present.</text>
+  <line x1="100" y1="525" x2="560" y2="525" stroke="#e2e8f0"/>
+  <rect x="100" y="550" width="110" height="28" rx="14" fill="#fee2e2"/>
+  <text x="155" y="570" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#b42318" font-weight="700">Failed</text>
+  <text x="100" y="608" font-family="Segoe UI, Arial, sans-serif" font-size="20" fill="#334155" font-weight="600">profile</text>
+  <text x="100" y="638" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#64748b">Missing folders</text>
+  <text x="100" y="664" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#111827">domain</text>
+
+  <rect x="620" y="320" width="510" height="390" rx="26" fill="#ffffff" stroke="#d9e2ec"/>
+  <text x="650" y="372" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#111827" font-weight="700">Violations</text>
+  <rect x="650" y="402" width="450" height="220" rx="18" fill="#f8fafc" stroke="#e2e8f0"/>
+  <text x="675" y="444" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#64748b" letter-spacing="1.5">RULE</text>
+  <text x="805" y="444" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#64748b" letter-spacing="1.5">MESSAGE</text>
+  <text x="960" y="444" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#64748b" letter-spacing="1.5">LOCATION</text>
+  <line x1="670" y1="460" x2="1080" y2="460" stroke="#e2e8f0"/>
+  <text x="675" y="502" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#111827">FeatureStructureRule</text>
+  <text x="805" y="502" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#111827">Missing folder: domain</text>
+  <text x="960" y="502" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#111827">feature/profile</text>
+</svg>

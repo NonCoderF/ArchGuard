@@ -1,9 +1,3 @@
-pluginManagement {
-    includeBuild("archguard-gradle-plugin") {
-        name = "archguard-plugin-build"
-    }
-}
-
 rootProject.name = "archguard"
 
 include(":archguard-core")
