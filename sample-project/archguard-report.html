@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ArchGuard Report</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --text: #142033;
+      --muted: #667085;
+      --border: #d9e1ec;
+      --accent: #2563eb;
+      --success: #15803d;
+      --danger: #b42318;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Inter, Segoe UI, Arial, sans-serif; background: linear-gradient(180deg, #eef3ff 0%, var(--bg) 30%, #eef2f7 100%); color: var(--text); }
+    .page { max-width: 1120px; margin: 0 auto; padding: 40px 20px 56px; }
+    .hero { background: rgba(255,255,255,0.88); border: 1px solid var(--border); border-radius: 24px; padding: 28px; box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08); backdrop-filter: blur(8px); }
+    .eyebrow { text-transform: uppercase; letter-spacing: .14em; font-size: 12px; color: var(--muted); margin: 0 0 8px; }
+    h1 { margin: 0; font-size: clamp(30px, 4vw, 46px); line-height: 1.05; }
+    .subtitle { margin: 12px 0 0; color: var(--muted); font-size: 15px; line-height: 1.6; }
+    .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 18px; }
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 18px; padding: 18px; }
+    .metric-label { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 8px; }
+    .metric-value { font-size: 30px; font-weight: 700; margin: 0; }
+    .sections { display: grid; gap: 18px; margin-top: 18px; }
+    .section { background: rgba(255,255,255,0.92); border: 1px solid var(--border); border-radius: 24px; padding: 22px; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04); }
+    .section h2 { margin: 0 0 14px; font-size: 20px; }
+    .feature { display: grid; grid-template-columns: 180px 1fr; gap: 16px; padding: 14px 0; border-top: 1px solid var(--border); }
+    .feature:first-of-type { border-top: 0; padding-top: 0; }
+    .status { display: inline-flex; align-items: center; gap: 8px; border-radius: 999px; padding: 8px 12px; font-size: 13px; font-weight: 600; }
+    .status.pass { background: rgba(21, 128, 61, 0.1); color: var(--success); }
+    .status.fail { background: rgba(180, 35, 24, 0.1); color: var(--danger); }
+    .muted { color: var(--muted); }
+    ul { margin: 8px 0 0; padding-left: 18px; }
+    li { margin: 4px 0; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; border-top: 1px solid var(--border); padding: 12px 10px; vertical-align: top; }
+    th { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+    code { background: #eef2ff; padding: 2px 6px; border-radius: 6px; }
+    @media (max-width: 860px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .feature { grid-template-columns: 1fr; } }
+    @media (max-width: 520px) { .grid { grid-template-columns: 1fr; } .page { padding: 18px 12px 28px; } .hero, .section { border-radius: 18px; } }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <p class="eyebrow">ArchGuard v0.0.1</p>
+      <h1>Architecture Report</h1>
+      <p class="subtitle">Filesystem validation for <code>C:\Users\NIZAMUDDIN\IdeaProjects\ArchitectureLinter\sample-project</code>. The report checks the configured feature root, required folders, and forbidden folder names.</p>
+      <div class="grid">
+        <div class="card">
+          <p class="metric-label">Features Found</p>
+          <p class="metric-value">2</p>
+        </div>
+        <div class="card">
+          <p class="metric-label">Passed</p>
+          <p class="metric-value">1</p>
+        </div>
+        <div class="card">
+          <p class="metric-label">Failed</p>
+          <p class="metric-value">1</p>
+        </div>
+        <div class="card">
+          <p class="metric-label">Violations</p>
+          <p class="metric-value">1</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="sections">
+      <section class="section">
+        <h2>Feature Checks</h2>
+        <div class="feature">
+          <div>
+            <div class="status pass">
+              Passed
+            </div>
+            <p class="muted" style="margin:10px 0 0;">login</p>
+            <p class="muted" style="margin:4px 0 0; font-size:13px;">C:\Users\NIZAMUDDIN\IdeaProjects\ArchitectureLinter\sample-project\src\main\kotlin\feature\login</p>
+          </div>
+          <div>
+            <p style="margin:0;">All required folders are present.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <div>
+            <div class="status fail">
+              Failed
+            </div>
+            <p class="muted" style="margin:10px 0 0;">profile</p>
+            <p class="muted" style="margin:4px 0 0; font-size:13px;">C:\Users\NIZAMUDDIN\IdeaProjects\ArchitectureLinter\sample-project\src\main\kotlin\feature\profile</p>
+          </div>
+          <div>
+            <p style="margin:0 0 8px;">Missing folders</p>
+            <ul>
+              <li>domain</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Violations</h2>
+        <table>
+          <thead>
+            <tr><th>Rule</th><th>Message</th><th>Location</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>FeatureStructureRule</td>
+              <td>Missing folder: domain</td>
+              <td>C:\Users\NIZAMUDDIN\IdeaProjects\ArchitectureLinter\sample-project\src\main\kotlin\feature\profile</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

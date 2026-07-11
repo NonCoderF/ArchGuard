@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/archguard-core" name="archguard-core">
+                <projects>
+                  <project path="$PROJECT_DIR$/archguard-core" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/archguard-gradle-plugin" name="archguard-gradle-plugin">
+                <projects>
+                  <project path="$PROJECT_DIR$/archguard-gradle-plugin" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="openjdk-26" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/archguard-core" />
+            <option value="$PROJECT_DIR$/archguard-gradle-plugin" />
+            <option value="$PROJECT_DIR$/sample-project" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
