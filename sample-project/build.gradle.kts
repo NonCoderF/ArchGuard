@@ -4,8 +4,12 @@ plugins {
 }
 
 archGuard {
-    htmlReport = true
-    htmlReportPath = "archguard-report.html"
+    reports {
+        html {
+            enabled = true
+            outputPath = "archguard-report.html"
+        }
+    }
 
     architecture {
         featureRoot = "feature"

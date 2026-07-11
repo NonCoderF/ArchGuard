@@ -1,5 +1,7 @@
 <div align="center">
 
+![Architecture](Header.png)
+
 # 🛡️ ArchGuard
 
 ### Enforce Architecture. Not Opinions.
@@ -79,6 +81,13 @@ Make it executable.
 
 ```kotlin
 archGuard {
+
+    reports {
+        html {
+            enabled = true
+            outputPath = "archguard-report.html"
+        }
+    }
 
     architecture {
 

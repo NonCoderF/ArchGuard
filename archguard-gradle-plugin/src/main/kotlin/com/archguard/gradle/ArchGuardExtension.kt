@@ -5,17 +5,37 @@ import com.archguard.core.architecture.LayerConfig
 
 open class ArchGuardExtension {
     var failOnViolation: Boolean = true
-    var htmlReport: Boolean = false
-    var htmlReportPath: String = "archguard-report.html"
     var ignoredPackages: List<String> = emptyList()
 
+    private val reportsDsl: ReportsDsl = ReportsDsl()
     private val architecture = ArchitectureDsl()
 
     fun architecture(block: ArchitectureDsl.() -> Unit) {
         architecture.block()
     }
 
+    fun reports(block: ReportsDsl.() -> Unit) {
+        reportsDsl.block()
+    }
+
     fun architectureConfig(): ArchitectureConfig = architecture.toConfig()
+
+    fun htmlReportEnabled(): Boolean = reportsDsl.html.enabled
+
+    fun htmlReportPath(): String = reportsDsl.html.outputPath
+}
+
+class ReportsDsl {
+    val html: HtmlReportDsl = HtmlReportDsl()
+
+    fun html(block: HtmlReportDsl.() -> Unit) {
+        html.block()
+    }
+}
+
+class HtmlReportDsl {
+    var enabled: Boolean = false
+    var outputPath: String = "archguard-report.html"
 }
 
 class ArchitectureDsl {

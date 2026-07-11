@@ -27,9 +27,9 @@ abstract class ArchitectureCheckTask : DefaultTask() {
             logger.lifecycle(line)
         }
 
-        if (extension.htmlReport) {
+        if (extension.htmlReportEnabled()) {
             val htmlReport = HtmlReportGenerator().render(result)
-            val outputFile = project.projectDir.toPath().resolve(extension.htmlReportPath)
+            val outputFile = project.projectDir.toPath().resolve(extension.htmlReportPath())
             Files.createDirectories(outputFile.parent ?: project.projectDir.toPath())
             Files.writeString(outputFile, htmlReport)
             logger.lifecycle("HTML report written to ${outputFile.toAbsolutePath()}")

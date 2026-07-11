@@ -39,3 +39,7 @@ tasks.test {
     dependsOn(":archguard-core:jar")
     useJUnitPlatform()
 }
+
+tasks.named("pluginUnderTestMetadata") {
+    dependsOn(":archguard-core:jar")
+}
