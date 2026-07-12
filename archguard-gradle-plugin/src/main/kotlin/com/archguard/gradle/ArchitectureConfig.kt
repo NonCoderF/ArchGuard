@@ -15,6 +15,7 @@ open class ArchitectureConfig @Inject constructor(
     private val layers = linkedMapOf<String, LayerConfig>()
     private val forbiddenFolderNames = linkedSetOf<String>()
 
+    @JvmSynthetic
     fun layer(name: String, action: Action<in LayerConfig>) {
         val layer = layers.getOrPut(name) {
             objects.newInstance(LayerConfig::class.java, name)

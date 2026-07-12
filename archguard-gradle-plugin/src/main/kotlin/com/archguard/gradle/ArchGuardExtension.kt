@@ -15,6 +15,7 @@ open class ArchGuardExtension @Inject constructor(
     private val reportsConfig: ReportConfig = objects.newInstance(ReportConfig::class.java, objects)
     private val architectureConfig: ArchitectureConfig = objects.newInstance(ArchitectureConfig::class.java, objects)
 
+    @JvmSynthetic
     fun reports(action: Action<in ReportConfig>) {
         action.execute(reportsConfig)
     }
@@ -23,6 +24,7 @@ open class ArchGuardExtension @Inject constructor(
         configureClosure(closure, reportsConfig)
     }
 
+    @JvmSynthetic
     fun architecture(action: Action<in ArchitectureConfig>) {
         action.execute(architectureConfig)
     }

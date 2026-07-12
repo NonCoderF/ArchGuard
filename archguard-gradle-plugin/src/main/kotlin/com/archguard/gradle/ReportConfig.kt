@@ -10,6 +10,7 @@ open class ReportConfig @Inject constructor(
 ) {
     private val htmlConfig: HtmlReportConfig = objects.newInstance(HtmlReportConfig::class.java)
 
+    @JvmSynthetic
     fun html(action: Action<in HtmlReportConfig>) {
         action.execute(htmlConfig)
     }

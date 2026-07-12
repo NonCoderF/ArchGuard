@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.9
+
+Groovy DSL dispatch fix release.
+
+- Hid `Action` overloads from Groovy so nested DSL uses closure delegation
+- Fixed `archGuard { architecture { layer(...) { ... } } }` in Groovy consumers
+- Kept Kotlin DSL behavior unchanged
+
 ## 0.1.8
 
 Groovy DSL compatibility release.
