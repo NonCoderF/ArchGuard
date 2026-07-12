@@ -81,7 +81,6 @@ Make it executable.
 
 ```kotlin
 archGuard {
-
     reports {
         html {
             enabled = true
@@ -90,19 +89,17 @@ archGuard {
     }
 
     architecture {
-
         featureRoot = "feature"
 
-        layer("presentation") {
-            required = true
-        }
+        feature("login") {
+            requiredLayer("presentation")
+            requiredLayer("domain")
+            requiredLayer("data")
 
-        layer("domain") {
-            required = true
-        }
-
-        layer("data") {
-            required = true
+            feature("chat") {
+                requiredLayer("ui")
+                requiredLayer("socket")
+            }
         }
 
         forbid(
@@ -111,7 +108,6 @@ archGuard {
             "manager"
         )
     }
-
 }
 ```
 
@@ -124,6 +120,9 @@ Now simply run
 Output
 
 ```text
+
+Exports as html report plus sample output
+
 ==================================
 ArchGuard
 ==================================
@@ -155,6 +154,13 @@ Violations : 1
 
 ```kotlin
 archGuard {
+    reports {
+        html {
+            enabled = true
+            outputPath = "archguard-report.html"
+        }
+    }
+
     architecture {
         featureRoot = "feature"
 
@@ -168,6 +174,12 @@ archGuard {
                 requiredLayer("socket")
             }
         }
+
+        forbid(
+            "helper",
+            "util",
+            "manager"
+        )
     }
 }
 ```
@@ -176,20 +188,32 @@ archGuard {
 
 ```kotlin
 archGuard {
+    reports {
+        html {
+            enabled = true
+            outputPath = "archguard-report.html"
+        }
+    }
+
     architecture {
         featureRoot = "feature"
 
-        layer("presentation") {
-            required = true
+        feature("login") {
+            requiredLayer("presentation")
+            requiredLayer("domain")
+            requiredLayer("data")
+
+            feature("chat") {
+                requiredLayer("ui")
+                requiredLayer("socket")
+            }
         }
 
-        layer("domain") {
-            required = true
-        }
-
-        layer("data") {
-            required = true
-        }
+        forbid(
+            "helper",
+            "util",
+            "manager"
+        )
     }
 }
 ```
