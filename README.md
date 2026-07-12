@@ -220,6 +220,143 @@ archGuard {
 
 ---
 
+# Installation
+
+## 1. Add JitPack
+
+In your project's **settings.gradle** add the JitPack repository.
+
+```groovy
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
+}
+```
+
+---
+
+## 2. Add ArchGuard to the root project
+
+In your project's **root build.gradle** add ArchGuard to the buildscript classpath.
+
+```groovy
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
+
+    dependencies {
+        classpath("com.github.NonCoderF:ArchGuard:0.1.10")
+    }
+}
+```
+
+---
+
+## 3. Apply the plugin
+
+In your application or module **build.gradle** apply the plugin.
+
+```groovy
+apply plugin: "io.github.noncoderf.archguard.gradle"
+```
+
+---
+
+## 4. Configure ArchGuard
+
+```groovy
+archGuard {
+
+    reports {
+        html {
+            enabled = true
+            outputPath = "archguard-report.html"
+        }
+    }
+
+    architecture {
+
+        featureRoot = "feature"
+
+        feature("login") {
+            requiredLayer("presentation")
+            requiredLayer("domain")
+            requiredLayer("data")
+
+            feature("chat") {
+                requiredLayer("ui")
+                requiredLayer("socket")
+            }
+        }
+
+        forbid(
+            "helper",
+            "util",
+            "manager"
+        )
+    }
+}
+```
+
+---
+
+## 5. (Optional) Create a shortcut task
+
+Create an alias so you can run `archGuardCheck` instead of `architectureCheck`.
+
+```groovy
+tasks.register("archGuardCheck") {
+    group = "verification"
+    description = "Runs the ArchGuard architecture validation."
+    dependsOn("architectureCheck")
+}
+```
+
+---
+
+## 6. Run ArchGuard
+
+```bash
+./gradlew architectureCheck
+```
+
+or
+
+```bash
+./gradlew archGuardCheck
+```
+
+---
+
+## 7. View the HTML Report
+
+After the build completes successfully, ArchGuard generates an HTML report containing:
+
+- ✅ Feature hierarchy
+- ✅ Required layer validation
+- ✅ Nested feature validation
+- ✅ Forbidden folder detection
+- ✅ Architecture violations
+- ✅ Build summary
+
+Open the generated report in your browser.
+
+```text
+app/archguard-report.html
+```
+
+---
+
+---
+
 # Philosophy
 
 ArchGuard does **not** tell you how to architect your project.
