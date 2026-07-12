@@ -439,7 +439,7 @@ Developers receive immediate feedback during the build.
 
 ✅ Gradle DSL
 
-✅ JSON reports
+✅ HTML reports
 
 ---
 
@@ -458,8 +458,6 @@ Developers receive immediate feedback during the build.
 ---
 
 ## v0.4
-
-- HTML reports
 - Architecture score
 
 ---
@@ -469,6 +467,7 @@ Developers receive immediate feedback during the build.
 - Stable Rule Engine
 - IntelliJ Plugin
 - GitHub Action
+- Html Reports
 
 ---
 
