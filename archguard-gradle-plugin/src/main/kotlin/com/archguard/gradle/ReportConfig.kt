@@ -1,5 +1,6 @@
 package com.archguard.gradle
 
+import groovy.lang.Closure
 import org.gradle.api.Action
 import org.gradle.api.model.ObjectFactory
 import javax.inject.Inject
@@ -11,6 +12,10 @@ open class ReportConfig @Inject constructor(
 
     fun html(action: Action<in HtmlReportConfig>) {
         action.execute(htmlConfig)
+    }
+
+    fun html(closure: Closure<*>) {
+        configureClosure(closure, htmlConfig)
     }
 
     fun htmlReportEnabled(): Boolean = htmlConfig.enabled

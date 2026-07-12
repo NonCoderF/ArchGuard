@@ -2,6 +2,7 @@ package com.archguard.gradle
 
 import com.archguard.core.architecture.ArchitectureConfig as CoreArchitectureConfig
 import com.archguard.core.architecture.LayerConfig as CoreLayerConfig
+import groovy.lang.Closure
 import org.gradle.api.Action
 import org.gradle.api.model.ObjectFactory
 import javax.inject.Inject
@@ -19,6 +20,13 @@ open class ArchitectureConfig @Inject constructor(
             objects.newInstance(LayerConfig::class.java, name)
         }
         action.execute(layer)
+    }
+
+    fun layer(name: String, closure: Closure<*>) {
+        val layer = layers.getOrPut(name) {
+            objects.newInstance(LayerConfig::class.java, name)
+        }
+        configureClosure(closure, layer)
     }
 
     fun forbid(vararg names: String) {

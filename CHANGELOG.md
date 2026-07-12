@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.8
+
+Groovy DSL compatibility release.
+
+- Added Closure-based delegates for `reports`, `html`, `architecture`, and `layer`
+- Fixed Groovy builds resolving `layer()` on the root `archGuard` extension
+- Kept Kotlin DSL support through `Action` overloads
+
 ## 0.1.7
 
 Nested Gradle DSL fix release.

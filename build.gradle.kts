@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "io.github.noncoderf.archguard"
-version = "0.1.7"
+version = "0.1.8"
 
 allprojects {
     repositories {

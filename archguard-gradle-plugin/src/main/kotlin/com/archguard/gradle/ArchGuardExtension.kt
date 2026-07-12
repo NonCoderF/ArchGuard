@@ -1,6 +1,7 @@
 package com.archguard.gradle
 
 import com.archguard.core.architecture.ArchitectureConfig as CoreArchitectureConfig
+import groovy.lang.Closure
 import org.gradle.api.Action
 import org.gradle.api.model.ObjectFactory
 import javax.inject.Inject
@@ -18,8 +19,16 @@ open class ArchGuardExtension @Inject constructor(
         action.execute(reportsConfig)
     }
 
+    fun reports(closure: Closure<*>) {
+        configureClosure(closure, reportsConfig)
+    }
+
     fun architecture(action: Action<in ArchitectureConfig>) {
         action.execute(architectureConfig)
+    }
+
+    fun architecture(closure: Closure<*>) {
+        configureClosure(closure, architectureConfig)
     }
 
     fun architectureConfig(): CoreArchitectureConfig = architectureConfig.toCoreConfig()

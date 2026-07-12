@@ -6,13 +6,13 @@ buildscript {
     }
 
     val groupProp = gradle.startParameter.projectProperties["group"] ?: "io.github.noncoderf.archguard"
-    val versionProp = gradle.startParameter.projectProperties["version"] ?: "0.1.7"
+    val versionProp = gradle.startParameter.projectProperties["version"] ?: "0.1.8"
     val groupPath = groupProp.replace('.', '/')
     val userHome = System.getProperty("user.home")
     val m2Jar = java.io.File(userHome, ".m2/repository/$groupPath/archguard-gradle-plugin/$versionProp/archguard-gradle-plugin-$versionProp.jar")
 
     val userDir = System.getProperty("user.dir")
-    val localJar = java.io.File(userDir, "archguard-gradle-plugin/build/libs/archguard-gradle-plugin-0.1.7.jar")
+    val localJar = java.io.File(userDir, "archguard-gradle-plugin/build/libs/archguard-gradle-plugin-0.1.8.jar")
 
     if (m2Jar.exists()) {
         dependencies {
@@ -21,7 +21,7 @@ buildscript {
     } else if (localJar.exists()) {
         dependencies {
             classpath(files(localJar))
-            val coreJar = java.io.File(userDir, "archguard-core/build/libs/archguard-core-0.1.7.jar")
+            val coreJar = java.io.File(userDir, "archguard-core/build/libs/archguard-core-0.1.8.jar")
             if (coreJar.exists()) {
                 classpath(files(coreJar))
             }
