@@ -248,8 +248,7 @@ Version **0.1**
 - Package structure validation
 - Configurable architecture DSL
 - Forbidden package detection
-- JSON reports
-- Console reports
+- Html reports
 
 ---
 
