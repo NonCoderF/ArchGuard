@@ -39,19 +39,25 @@ class HtmlReportGenerator {
             appendLine("    .sections { display: grid; gap: 18px; margin-top: 18px; }")
             appendLine("    .section { background: rgba(255,255,255,0.92); border: 1px solid var(--border); border-radius: 24px; padding: 22px; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04); }")
             appendLine("    .section h2 { margin: 0 0 14px; font-size: 20px; }")
-            appendLine("    .feature { display: grid; grid-template-columns: 180px 1fr; gap: 16px; padding: 14px 0; border-top: 1px solid var(--border); }")
-            appendLine("    .feature:first-of-type { border-top: 0; padding-top: 0; }")
-            appendLine("    .status { display: inline-flex; align-items: center; gap: 8px; border-radius: 999px; padding: 8px 12px; font-size: 13px; font-weight: 600; }")
-            appendLine("    .status.pass { background: rgba(21, 128, 61, 0.1); color: var(--success); }")
-            appendLine("    .status.fail { background: rgba(180, 35, 24, 0.1); color: var(--danger); }")
+            appendLine("    .tree, .tree ul { list-style: none; margin: 0; padding-left: 22px; }")
+            appendLine("    .tree { padding-left: 0; }")
+            appendLine("    .tree li { position: relative; margin: 10px 0; }")
+            appendLine("    .tree li::before { content: ''; position: absolute; left: -14px; top: 0; bottom: -10px; width: 1px; background: var(--border); }")
+            appendLine("    .tree li::after { content: ''; position: absolute; left: -14px; top: 16px; width: 14px; height: 1px; background: var(--border); }")
+            appendLine("    .node { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--panel); border: 1px solid var(--border); border-radius: 14px; }")
+            appendLine("    .node.pass { border-color: rgba(21, 128, 61, 0.24); }")
+            appendLine("    .node.fail { border-color: rgba(180, 35, 24, 0.24); }")
+            appendLine("    .badge { display: inline-flex; align-items: center; border-radius: 999px; padding: 5px 10px; font-size: 12px; font-weight: 700; }")
+            appendLine("    .badge.pass { background: rgba(21, 128, 61, 0.1); color: var(--success); }")
+            appendLine("    .badge.fail { background: rgba(180, 35, 24, 0.1); color: var(--danger); }")
             appendLine("    .muted { color: var(--muted); }")
-            appendLine("    ul { margin: 8px 0 0; padding-left: 18px; }")
-            appendLine("    li { margin: 4px 0; }")
+            appendLine("    .details { margin: 8px 0 0; padding-left: 0; }")
+            appendLine("    .details li { margin: 5px 0; }")
             appendLine("    table { width: 100%; border-collapse: collapse; }")
             appendLine("    th, td { text-align: left; border-top: 1px solid var(--border); padding: 12px 10px; vertical-align: top; }")
             appendLine("    th { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }")
             appendLine("    code { background: #eef2ff; padding: 2px 6px; border-radius: 6px; }")
-            appendLine("    @media (max-width: 860px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .feature { grid-template-columns: 1fr; } }")
+            appendLine("    @media (max-width: 860px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }")
             appendLine("    @media (max-width: 520px) { .grid { grid-template-columns: 1fr; } .page { padding: 18px 12px 28px; } .hero, .section { border-radius: 18px; } }")
             appendLine("  </style>")
             appendLine("</head>")
@@ -60,9 +66,9 @@ class HtmlReportGenerator {
             appendLine("    <section class=\"hero\">")
             appendLine("      <p class=\"eyebrow\">ArchGuard v0.0.1</p>")
             appendLine("      <h1>Architecture Report</h1>")
-            appendLine("      <p class=\"subtitle\">Filesystem validation for <code>${escape(result.projectRoot.toString())}</code>. The report checks the configured feature root, required folders, and forbidden folder names.</p>")
+            appendLine("      <p class=\"subtitle\">Filesystem validation for <code>${escape(result.projectRoot.toString())}</code>. The report checks the configured feature root, required folders, nested features, and forbidden folder names.</p>")
             appendLine("      <div class=\"grid\">")
-            metricCard("Features Found", result.featureResults.size.toString())
+            metricCard("Features Found", result.allFeatures.size.toString())
             metricCard("Passed", passed.toString())
             metricCard("Failed", failed.toString())
             metricCard("Violations", totalViolations.toString())
@@ -71,30 +77,12 @@ class HtmlReportGenerator {
             appendLine("")
             appendLine("    <div class=\"sections\">")
             appendLine("      <section class=\"section\">")
-            appendLine("        <h2>Feature Checks</h2>")
+            appendLine("        <h2>Feature Tree</h2>")
+            appendLine("        <ul class=\"tree\">")
             result.featureResults.forEach { feature ->
-                appendLine("        <div class=\"feature\">")
-                appendLine("          <div>")
-                appendLine("            <div class=\"status ${if (feature.isPassed) "pass" else "fail"}\">")
-                appendLine("              ${if (feature.isPassed) "Passed" else "Failed"}")
-                appendLine("            </div>")
-                appendLine("            <p class=\"muted\" style=\"margin:10px 0 0;\">${escape(feature.name)}</p>")
-                appendLine("            <p class=\"muted\" style=\"margin:4px 0 0; font-size:13px;\">${escape(feature.path.toString())}</p>")
-                appendLine("          </div>")
-                appendLine("          <div>")
-                if (feature.missingFolders.isEmpty()) {
-                    appendLine("            <p style=\"margin:0;\">All required folders are present.</p>")
-                } else {
-                    appendLine("            <p style=\"margin:0 0 8px;\">Missing folders</p>")
-                    appendLine("            <ul>")
-                    feature.missingFolders.forEach { missingFolder ->
-                        appendLine("              <li>${escape(missingFolder)}</li>")
-                    }
-                    appendLine("            </ul>")
-                }
-                appendLine("          </div>")
-                appendLine("        </div>")
+                renderFeature(feature, 4)
             }
+            appendLine("        </ul>")
             appendLine("      </section>")
             appendLine("")
             appendLine("      <section class=\"section\">")
@@ -123,6 +111,45 @@ class HtmlReportGenerator {
             appendLine("</body>")
             appendLine("</html>")
         }
+    }
+
+    private fun StringBuilder.renderFeature(feature: FeatureValidation, depth: Int) {
+        val indent = "  ".repeat(depth)
+        val statusClass = if (feature.isPassed) "pass" else "fail"
+        appendLine("${indent}<li>")
+        appendLine("${indent}  <div class=\"node $statusClass\">")
+        appendLine("${indent}    <span class=\"badge $statusClass\">${if (feature.isPassed) "PASS" else "FAIL"}</span>")
+        appendLine("${indent}    <strong>${escape(feature.name)}</strong>")
+        appendLine("${indent}    <span class=\"muted\">${escape(feature.path.toString())}</span>")
+        appendLine("${indent}  </div>")
+
+        if (feature.requiredLayers.isNotEmpty() || feature.violations.isNotEmpty() || feature.childFeatures.isNotEmpty()) {
+            appendLine("${indent}  <ul>")
+            feature.requiredLayers.forEach { layer ->
+                appendLine("${indent}    <li>")
+                appendLine("${indent}      <div class=\"node ${if (layer.present) "pass" else "fail"}\">")
+                appendLine("${indent}        <span class=\"badge ${if (layer.present) "pass" else "fail"}\">${if (layer.present) "OK" else "Missing"}</span>")
+                appendLine("${indent}        <strong>${escape(layer.name)}</strong>")
+                appendLine("${indent}      </div>")
+                appendLine("${indent}    </li>")
+            }
+
+            feature.violations.forEach { violation ->
+                appendLine("${indent}    <li>")
+                appendLine("${indent}      <div class=\"node fail\">")
+                appendLine("${indent}        <span class=\"badge fail\">Rule</span>")
+                appendLine("${indent}        <strong>${escape(violation.message)}</strong>")
+                appendLine("${indent}      </div>")
+                appendLine("${indent}    </li>")
+            }
+
+            feature.childFeatures.forEach { child ->
+                renderFeature(child, depth + 2)
+            }
+            appendLine("${indent}  </ul>")
+        }
+
+        appendLine("${indent}</li>")
     }
 
     private fun StringBuilder.metricCard(label: String, value: String) {

@@ -9,31 +9,41 @@ class ConsoleReportGenerator {
             appendLine()
             appendLine("Found")
             appendLine()
-            appendLine("Features : ${result.featureResults.size}")
+            appendLine("Features : ${result.allFeatures.size}")
             appendLine()
             appendLine("Running rules...")
             appendLine()
 
             result.featureResults.forEach { feature ->
-                if (feature.isPassed) {
-                    appendLine("✓ ${feature.name}")
-                } else {
-                    appendLine("✗ ${feature.name}")
-                    appendLine()
-                    appendLine("Missing")
-                    appendLine()
-                    feature.missingFolders.forEach { missingFolder ->
-                        appendLine(missingFolder)
-                    }
-                    appendLine()
-                }
+                renderFeature(feature, 0)
             }
 
+            appendLine()
             appendLine("Summary")
             appendLine()
             appendLine("Passed : ${result.passedFeatures}")
             appendLine("Failed : ${result.failedFeatures}")
             appendLine("Violations : ${result.violations.size}")
+        }
+    }
+
+    private fun StringBuilder.renderFeature(feature: FeatureValidation, depth: Int) {
+        val indent = "  ".repeat(depth)
+        appendLine("${indent}${if (feature.isPassed) "✓" else "✗"} ${feature.name}")
+
+        feature.requiredLayers.forEach { layer ->
+            val status = if (layer.present) "✓" else "✗ Missing"
+            appendLine("${indent}  - ${layer.name} $status")
+        }
+
+        if (feature.violations.isNotEmpty()) {
+            feature.violations.forEach { violation ->
+                appendLine("${indent}  ! ${violation.message}")
+            }
+        }
+
+        feature.childFeatures.forEach { child ->
+            renderFeature(child, depth + 1)
         }
     }
 }

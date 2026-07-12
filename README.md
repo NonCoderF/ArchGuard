@@ -151,6 +151,49 @@ Failed : 1
 Violations : 1
 ```
 
+## Feature-centric DSL
+
+```kotlin
+archGuard {
+    architecture {
+        featureRoot = "feature"
+
+        feature("login") {
+            requiredLayer("presentation")
+            requiredLayer("domain")
+            requiredLayer("data")
+
+            feature("chat") {
+                requiredLayer("ui")
+                requiredLayer("socket")
+            }
+        }
+    }
+}
+```
+
+## Legacy DSL
+
+```kotlin
+archGuard {
+    architecture {
+        featureRoot = "feature"
+
+        layer("presentation") {
+            required = true
+        }
+
+        layer("domain") {
+            required = true
+        }
+
+        layer("data") {
+            required = true
+        }
+    }
+}
+```
+
 ---
 
 # Philosophy

@@ -8,11 +8,14 @@ data class ArchitectureAnalysisResult(
     val featureResults: List<FeatureValidation>,
     val ruleEngineResult: RuleEngineResult,
 ) {
+    val allFeatures: List<FeatureValidation>
+        get() = featureResults.flatMap { it.flatten().toList() }
+
     val passedFeatures: Int
-        get() = featureResults.count { it.isPassed }
+        get() = allFeatures.count { it.isPassed }
 
     val failedFeatures: Int
-        get() = featureResults.count { !it.isPassed }
+        get() = allFeatures.count { !it.isPassed }
 
     val violations: List<Violation>
         get() = ruleEngineResult.violations

@@ -6,13 +6,13 @@ buildscript {
     }
 
     def groupProp = gradle.startParameter.projectProperties["group"] ?: "io.github.noncoderf.archguard"
-    def versionProp = gradle.startParameter.projectProperties["version"] ?: "0.1.9"
+    def versionProp = gradle.startParameter.projectProperties["version"] ?: "0.1.10"
     def groupPath = groupProp.replace('.', '/')
     def userHome = System.getProperty("user.home")
     def m2Jar = file("${userHome}/.m2/repository/${groupPath}/archguard-gradle-plugin/${versionProp}/archguard-gradle-plugin-${versionProp}.jar")
 
     def userDir = System.getProperty("user.dir")
-    def localJar = file("${userDir}/archguard-gradle-plugin/build/libs/archguard-gradle-plugin-0.1.9.jar")
+    def localJar = file("${userDir}/archguard-gradle-plugin/build/libs/archguard-gradle-plugin-0.1.10.jar")
 
     if (m2Jar.exists()) {
         dependencies {
@@ -21,7 +21,7 @@ buildscript {
     } else if (localJar.exists()) {
         dependencies {
             classpath(files(localJar))
-            def coreJar = file("${userDir}/archguard-core/build/libs/archguard-core-0.1.9.jar")
+            def coreJar = file("${userDir}/archguard-core/build/libs/archguard-core-0.1.10.jar")
             if (coreJar.exists()) {
                 classpath(files(coreJar))
             }
@@ -55,19 +55,16 @@ if (isPluginAvailable) {
         architecture {
             featureRoot = "feature"
 
-            layer("presentation") {
-                required = true
-            }
+            feature("login") {
+                requiredLayer("presentation")
+                requiredLayer("domain")
+                requiredLayer("data")
 
-            layer("domain") {
-                required = true
+                feature("chat") {
+                    requiredLayer("ui")
+                    requiredLayer("socket")
+                }
             }
-
-            layer("data") {
-                required = true
-            }
-
-            forbid("helper", "util", "manager")
         }
     }
 
