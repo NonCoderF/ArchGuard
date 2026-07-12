@@ -33,7 +33,7 @@ Use this checklist for a public release.
 
 ```kotlin
 plugins {
-    id("io.github.noncoderf.archguard.gradle") version "0.1.0"
+    id("io.github.noncoderf.archguard.gradle") version "0.1.7"
 }
 ```
 

@@ -6,13 +6,13 @@ buildscript {
     }
 
     val groupProp = gradle.startParameter.projectProperties["group"] ?: "io.github.noncoderf.archguard"
-    val versionProp = gradle.startParameter.projectProperties["version"] ?: "0.1.0"
+    val versionProp = gradle.startParameter.projectProperties["version"] ?: "0.1.7"
     val groupPath = groupProp.replace('.', '/')
     val userHome = System.getProperty("user.home")
     val m2Jar = java.io.File(userHome, ".m2/repository/$groupPath/archguard-gradle-plugin/$versionProp/archguard-gradle-plugin-$versionProp.jar")
-    
+
     val userDir = System.getProperty("user.dir")
-    val localJar = java.io.File(userDir, "archguard-gradle-plugin/build/libs/archguard-gradle-plugin-0.1.0.jar")
+    val localJar = java.io.File(userDir, "archguard-gradle-plugin/build/libs/archguard-gradle-plugin-0.1.7.jar")
 
     if (m2Jar.exists()) {
         dependencies {
@@ -21,7 +21,7 @@ buildscript {
     } else if (localJar.exists()) {
         dependencies {
             classpath(files(localJar))
-            val coreJar = java.io.File(userDir, "archguard-core/build/libs/archguard-core-0.1.3.jar")
+            val coreJar = java.io.File(userDir, "archguard-core/build/libs/archguard-core-0.1.7.jar")
             if (coreJar.exists()) {
                 classpath(files(coreJar))
             }
@@ -44,39 +44,41 @@ if (isPluginAvailable) {
     apply(plugin = "io.github.noncoderf.archguard.gradle")
 
     val archGuardExt = extensions.getByName("archGuard")
-    val function1Class = Class.forName("kotlin.jvm.functions.Function1")
+    val actionClass = org.gradle.api.Action::class.java
 
-    // configure reports
-    val reportsMethod = archGuardExt.javaClass.getMethod("reports", function1Class)
-    val configureReports = { dsl: Any ->
-        val htmlMethod = dsl.javaClass.getMethod("html", function1Class)
-        val configureHtml = { htmlDsl: Any ->
-            htmlDsl.javaClass.getMethod("setEnabled", Boolean::class.javaPrimitiveType).invoke(htmlDsl, true)
-            htmlDsl.javaClass.getMethod("setOutputPath", String::class.java).invoke(htmlDsl, "archguard-report.html")
-            Unit
+    val reportsMethod = archGuardExt.javaClass.getMethod("reports", actionClass)
+    val configureReports = object : org.gradle.api.Action<Any> {
+        override fun execute(dsl: Any) {
+            val htmlMethod = dsl.javaClass.getMethod("html", actionClass)
+            val configureHtml = object : org.gradle.api.Action<Any> {
+                override fun execute(htmlDsl: Any) {
+                    htmlDsl.javaClass.getMethod("setEnabled", Boolean::class.javaPrimitiveType).invoke(htmlDsl, true)
+                    htmlDsl.javaClass.getMethod("setOutputPath", String::class.java).invoke(htmlDsl, "archguard-report.html")
+                }
+            }
+            htmlMethod.invoke(dsl, configureHtml)
         }
-        htmlMethod.invoke(dsl, configureHtml)
-        Unit
     }
     reportsMethod.invoke(archGuardExt, configureReports)
 
-    // configure architecture
-    val architectureMethod = archGuardExt.javaClass.getMethod("architecture", function1Class)
-    val configureArchitecture = { dsl: Any ->
-        dsl.javaClass.getMethod("setFeatureRoot", String::class.java).invoke(dsl, "feature")
+    val architectureMethod = archGuardExt.javaClass.getMethod("architecture", actionClass)
+    val configureArchitecture = object : org.gradle.api.Action<Any> {
+        override fun execute(dsl: Any) {
+            dsl.javaClass.getMethod("setFeatureRoot", String::class.java).invoke(dsl, "feature")
 
-        val layerMethod = dsl.javaClass.getMethod("layer", String::class.java, function1Class)
-        val configureLayer = { layerDsl: Any ->
-            layerDsl.javaClass.getMethod("setRequired", Boolean::class.javaPrimitiveType).invoke(layerDsl, true)
-            Unit
+            val layerMethod = dsl.javaClass.getMethod("layer", String::class.java, actionClass)
+            val configureLayer = object : org.gradle.api.Action<Any> {
+                override fun execute(layerDsl: Any) {
+                    layerDsl.javaClass.getMethod("setRequired", Boolean::class.javaPrimitiveType).invoke(layerDsl, true)
+                }
+            }
+            layerMethod.invoke(dsl, "presentation", configureLayer)
+            layerMethod.invoke(dsl, "domain", configureLayer)
+            layerMethod.invoke(dsl, "data", configureLayer)
+
+            val forbidMethod = dsl.javaClass.getMethod("forbid", Array<String>::class.java)
+            forbidMethod.invoke(dsl, arrayOf("helper", "util", "manager") as Any)
         }
-        layerMethod.invoke(dsl, "presentation", configureLayer)
-        layerMethod.invoke(dsl, "domain", configureLayer)
-        layerMethod.invoke(dsl, "data", configureLayer)
-
-        val forbidMethod = dsl.javaClass.getMethod("forbid", Array<String>::class.java)
-        forbidMethod.invoke(dsl, arrayOf("helper", "util", "manager") as Any)
-        Unit
     }
     architectureMethod.invoke(archGuardExt, configureArchitecture)
 } else {
