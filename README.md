@@ -222,55 +222,18 @@ archGuard {
 
 # Installation
 
-## 1. Add JitPack
-
-In your project's **settings.gradle** add the JitPack repository.
+## 1. Add ArchGuard to the app module or submodule of the project
+ your application or module **build.gradle** apply the plugin.
 
 ```groovy
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-
-    repositories {
-        google()
-        mavenCentral()
-        maven { url "https://jitpack.io" }
-    }
+plugins {
+    id("io.github.noncoderf.archguard.gradle") version "0.1.3"
 }
 ```
 
 ---
 
-## 2. Add ArchGuard to the root project
-
-In your project's **root build.gradle** add ArchGuard to the buildscript classpath.
-
-```groovy
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-        maven { url "https://jitpack.io" }
-    }
-
-    dependencies {
-        classpath("com.github.NonCoderF:ArchGuard:0.1.10")
-    }
-}
-```
-
----
-
-## 3. Apply the plugin
-
-In your application or module **build.gradle** apply the plugin.
-
-```groovy
-apply plugin: "io.github.noncoderf.archguard.gradle"
-```
-
----
-
-## 4. Configure ArchGuard
+## 2. Configure ArchGuard
 
 ```groovy
 archGuard {
@@ -308,7 +271,7 @@ archGuard {
 
 ---
 
-## 5. (Optional) Create a shortcut task
+## 3. (Optional) Create a shortcut task
 
 Create an alias so you can run `archGuardCheck` instead of `architectureCheck`.
 
@@ -322,7 +285,7 @@ tasks.register("archGuardCheck") {
 
 ---
 
-## 6. Run ArchGuard
+## 4. Run ArchGuard
 
 ```bash
 ./gradlew architectureCheck
@@ -336,7 +299,7 @@ or
 
 ---
 
-## 7. View the HTML Report
+## 5. View the HTML Report
 
 After the build completes successfully, ArchGuard generates an HTML report containing:
 
