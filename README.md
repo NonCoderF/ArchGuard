@@ -408,9 +408,7 @@ Version **0.1**
 ```
 ArchGuard
 
-├── archguard-core
-│
-├── archguard-gradle-plugin
+├── archguard-plugin
 │
 └── sample-project
 ```

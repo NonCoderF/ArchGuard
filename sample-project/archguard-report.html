@@ -30,19 +30,25 @@
     .sections { display: grid; gap: 18px; margin-top: 18px; }
     .section { background: rgba(255,255,255,0.92); border: 1px solid var(--border); border-radius: 24px; padding: 22px; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04); }
     .section h2 { margin: 0 0 14px; font-size: 20px; }
-    .feature { display: grid; grid-template-columns: 180px 1fr; gap: 16px; padding: 14px 0; border-top: 1px solid var(--border); }
-    .feature:first-of-type { border-top: 0; padding-top: 0; }
-    .status { display: inline-flex; align-items: center; gap: 8px; border-radius: 999px; padding: 8px 12px; font-size: 13px; font-weight: 600; }
-    .status.pass { background: rgba(21, 128, 61, 0.1); color: var(--success); }
-    .status.fail { background: rgba(180, 35, 24, 0.1); color: var(--danger); }
+    .tree, .tree ul { list-style: none; margin: 0; padding-left: 22px; }
+    .tree { padding-left: 0; }
+    .tree li { position: relative; margin: 10px 0; }
+    .tree li::before { content: ''; position: absolute; left: -14px; top: 0; bottom: -10px; width: 1px; background: var(--border); }
+    .tree li::after { content: ''; position: absolute; left: -14px; top: 16px; width: 14px; height: 1px; background: var(--border); }
+    .node { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--panel); border: 1px solid var(--border); border-radius: 14px; }
+    .node.pass { border-color: rgba(21, 128, 61, 0.24); }
+    .node.fail { border-color: rgba(180, 35, 24, 0.24); }
+    .badge { display: inline-flex; align-items: center; border-radius: 999px; padding: 5px 10px; font-size: 12px; font-weight: 700; }
+    .badge.pass { background: rgba(21, 128, 61, 0.1); color: var(--success); }
+    .badge.fail { background: rgba(180, 35, 24, 0.1); color: var(--danger); }
     .muted { color: var(--muted); }
-    ul { margin: 8px 0 0; padding-left: 18px; }
-    li { margin: 4px 0; }
+    .details { margin: 8px 0 0; padding-left: 0; }
+    .details li { margin: 5px 0; }
     table { width: 100%; border-collapse: collapse; }
     th, td { text-align: left; border-top: 1px solid var(--border); padding: 12px 10px; vertical-align: top; }
     th { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
     code { background: #eef2ff; padding: 2px 6px; border-radius: 6px; }
-    @media (max-width: 860px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .feature { grid-template-columns: 1fr; } }
+    @media (max-width: 860px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     @media (max-width: 520px) { .grid { grid-template-columns: 1fr; } .page { padding: 18px 12px 28px; } .hero, .section { border-radius: 18px; } }
   </style>
 </head>
@@ -51,7 +57,7 @@
     <section class="hero">
       <p class="eyebrow">ArchGuard v0.0.1</p>
       <h1>Architecture Report</h1>
-      <p class="subtitle">Filesystem validation for <code>C:\Users\NIZAMUDDIN\IdeaProjects\ArchitectureLinter\sample-project</code>. The report checks the configured feature root, required folders, and forbidden folder names.</p>
+      <p class="subtitle">Filesystem validation for <code>C:\Users\NIZAMUDDIN\IdeaProjects\ArchitectureLinter\sample-project</code>. The report checks the configured feature root, required folders, nested features, and forbidden folder names.</p>
       <div class="grid">
         <div class="card">
           <p class="metric-label">Features Found</p>
@@ -59,65 +65,77 @@
         </div>
         <div class="card">
           <p class="metric-label">Passed</p>
-          <p class="metric-value">1</p>
+          <p class="metric-value">2</p>
         </div>
         <div class="card">
           <p class="metric-label">Failed</p>
-          <p class="metric-value">1</p>
+          <p class="metric-value">0</p>
         </div>
         <div class="card">
           <p class="metric-label">Violations</p>
-          <p class="metric-value">1</p>
+          <p class="metric-value">0</p>
         </div>
       </div>
     </section>
 
     <div class="sections">
       <section class="section">
-        <h2>Feature Checks</h2>
-        <div class="feature">
-          <div>
-            <div class="status pass">
-              Passed
-            </div>
-            <p class="muted" style="margin:10px 0 0;">login</p>
-            <p class="muted" style="margin:4px 0 0; font-size:13px;">C:\Users\NIZAMUDDIN\IdeaProjects\ArchitectureLinter\sample-project\src\main\kotlin\feature\login</p>
+        <h2>Feature Tree</h2>
+        <ul class="tree">
+        <li>
+          <div class="node pass">
+            <span class="badge pass">PASS</span>
+            <strong>login</strong>
+            <span class="muted">C:\Users\NIZAMUDDIN\IdeaProjects\ArchitectureLinter\sample-project\src\main\kotlin\feature\login</span>
           </div>
-          <div>
-            <p style="margin:0;">All required folders are present.</p>
-          </div>
-        </div>
-        <div class="feature">
-          <div>
-            <div class="status fail">
-              Failed
-            </div>
-            <p class="muted" style="margin:10px 0 0;">profile</p>
-            <p class="muted" style="margin:4px 0 0; font-size:13px;">C:\Users\NIZAMUDDIN\IdeaProjects\ArchitectureLinter\sample-project\src\main\kotlin\feature\profile</p>
-          </div>
-          <div>
-            <p style="margin:0 0 8px;">Missing folders</p>
-            <ul>
-              <li>domain</li>
-            </ul>
-          </div>
-        </div>
+          <ul>
+            <li>
+              <div class="node pass">
+                <span class="badge pass">OK</span>
+                <strong>presentation</strong>
+              </div>
+            </li>
+            <li>
+              <div class="node pass">
+                <span class="badge pass">OK</span>
+                <strong>domain</strong>
+              </div>
+            </li>
+            <li>
+              <div class="node pass">
+                <span class="badge pass">OK</span>
+                <strong>data</strong>
+              </div>
+            </li>
+            <li>
+              <div class="node pass">
+                <span class="badge pass">PASS</span>
+                <strong>chat</strong>
+                <span class="muted">C:\Users\NIZAMUDDIN\IdeaProjects\ArchitectureLinter\sample-project\src\main\kotlin\feature\login\chat</span>
+              </div>
+              <ul>
+                <li>
+                  <div class="node pass">
+                    <span class="badge pass">OK</span>
+                    <strong>ui</strong>
+                  </div>
+                </li>
+                <li>
+                  <div class="node pass">
+                    <span class="badge pass">OK</span>
+                    <strong>socket</strong>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        </ul>
       </section>
 
       <section class="section">
         <h2>Violations</h2>
-        <table>
-          <thead>
-            <tr><th>Rule</th><th>Message</th><th>Location</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>FeatureStructureRule</td>
-              <td>Missing folder: domain</td>
-              <td>C:\Users\NIZAMUDDIN\IdeaProjects\ArchitectureLinter\sample-project\src\main\kotlin\feature\profile</td>
-            </tr>
-          </tbody>
-        </table>
+        <p style="margin:0;">No violations detected.</p>
       </section>
     </div>
   </div>

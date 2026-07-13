@@ -9,8 +9,8 @@ Thanks for helping improve ArchGuard.
 
 ## Tests
 
-- Unit tests live in `archguard-core`.
-- Plugin functional tests live in `archguard-gradle-plugin`.
+- Core unit tests live in `archguard-plugin`.
+- Plugin functional tests live in `archguard-plugin`.
 - The sample project provides a smoke test for the installed plugin workflow.
 
 ## Code Style
@@ -18,7 +18,7 @@ Thanks for helping improve ArchGuard.
 - Kotlin only.
 - Prefer immutable models.
 - Keep classes small and single-purpose.
-- Avoid introducing dependencies into `archguard-core` unless they are required for analysis or reporting.
+- Avoid introducing dependencies into `archguard-plugin` unless they are required for analysis or reporting.
 
 ## Pull Requests
 

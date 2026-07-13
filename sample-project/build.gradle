@@ -6,25 +6,21 @@ buildscript {
     }
 
     def groupProp = gradle.startParameter.projectProperties["group"] ?: "io.github.noncoderf.archguard"
-    def versionProp = gradle.startParameter.projectProperties["version"] ?: "0.1.10"
+    def versionProp = gradle.startParameter.projectProperties["version"] ?: "0.1.2"
     def groupPath = groupProp.replace('.', '/')
     def userHome = System.getProperty("user.home")
-    def m2Jar = file("${userHome}/.m2/repository/${groupPath}/archguard-gradle-plugin/${versionProp}/archguard-gradle-plugin-${versionProp}.jar")
+    def m2Jar = file("${userHome}/.m2/repository/${groupPath}/archguard-plugin/${versionProp}/archguard-plugin-${versionProp}.jar")
 
     def userDir = System.getProperty("user.dir")
-    def localJar = file("${userDir}/archguard-gradle-plugin/build/libs/archguard-gradle-plugin-0.1.10.jar")
+    def localJar = file("${userDir}/archguard-plugin/build/libs/archguard-plugin-0.1.2.jar")
 
     if (m2Jar.exists()) {
         dependencies {
-            classpath("$groupProp:archguard-gradle-plugin:$versionProp")
+            classpath("$groupProp:archguard-plugin:$versionProp")
         }
     } else if (localJar.exists()) {
         dependencies {
             classpath(files(localJar))
-            def coreJar = file("${userDir}/archguard-core/build/libs/archguard-core-0.1.10.jar")
-            if (coreJar.exists()) {
-                classpath(files(coreJar))
-            }
         }
     }
 }
@@ -33,56 +29,36 @@ plugins {
     id 'org.jetbrains.kotlin.jvm'
 }
 
-def isPluginAvailable = false
-try {
-    Class.forName("com.archguard.gradle.ArchGuardPlugin")
-    isPluginAvailable = true
-} catch (ClassNotFoundException ignored) {
-    isPluginAvailable = false
+apply plugin: "io.github.noncoderf.archguard.gradle"
+
+archGuard {
+    reports {
+        html {
+            enabled = true
+            outputPath = "archguard-report.html"
+        }
+    }
+
+    architecture {
+        featureRoot = "feature"
+
+        feature("login") {
+            requiredLayer("presentation")
+            requiredLayer("domain")
+            requiredLayer("data")
+
+            feature("chat") {
+                requiredLayer("ui")
+                requiredLayer("socket")
+            }
+        }
+    }
 }
 
-if (isPluginAvailable) {
-    apply plugin: "io.github.noncoderf.archguard.gradle"
-
-    archGuard {
-        reports {
-            html {
-                enabled = true
-                outputPath = "archguard-report.html"
-            }
-        }
-
-        architecture {
-            featureRoot = "feature"
-
-            feature("login") {
-                requiredLayer("presentation")
-                requiredLayer("domain")
-                requiredLayer("data")
-
-                feature("chat") {
-                    requiredLayer("ui")
-                    requiredLayer("socket")
-                }
-            }
-        }
-    }
-
-    tasks.register("archGuardCheck") {
-        group = "verification"
-        description = "Runs the ArchGuard architecture check for the sample project."
-        dependsOn("architectureCheck")
-    }
-} else {
-    logger.warn("ArchGuard plugin is not available on classpath. Skipping configuration.")
-
-    tasks.register("archGuardCheck") {
-        group = "verification"
-        description = "Dummy ArchGuard check task when plugin is not available."
-        doLast {
-            logger.warn("ArchGuardCheck skipped because the ArchGuard plugin is not available.")
-        }
-    }
+tasks.register("archGuardCheck") {
+    group = "verification"
+    description = "Runs the ArchGuard architecture check for the sample project."
+    dependsOn("architectureCheck")
 }
 
 dependencies {

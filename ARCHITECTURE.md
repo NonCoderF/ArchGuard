@@ -30,9 +30,7 @@ Long-term goals:
 ``` text
 ArchGuard
 │
-├── archguard-core
-├── archguard-gradle-plugin
-├── sample-project
+├── archguard-plugin
 ├── docs
 ├── build.gradle.kts
 ├── settings.gradle.kts
@@ -44,44 +42,19 @@ ArchGuard
 
 # Module Responsibilities
 
-## archguard-core
+## archguard-plugin
 
-Contains all architecture analysis logic.
+Contains all architecture analysis logic and Gradle plugin entry points.
 
 Packages:
 
 ``` text
-engine/
-parser/
-model/
-graph/
-rules/
-report/
-visitor/
-config/
+core/
+plugin/
 ```
 
-Must NOT depend on Gradle.
-
-------------------------------------------------------------------------
-
-## archguard-gradle-plugin
-
-Responsibilities:
-
--   Register architectureCheck
--   Provide Gradle DSL
--   Invoke ArchGuardEngine
-
-No parsing logic belongs here.
-
-------------------------------------------------------------------------
-
-## sample-project
-
-Small Kotlin project used for development and integration tests.
-
-Contains intentionally good and bad architectural examples.
+The `core` package holds analysis logic. The `plugin` package holds the
+Gradle-facing entry points.
 
 ------------------------------------------------------------------------
 
