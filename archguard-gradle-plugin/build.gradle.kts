@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "io.github.noncoderf.archguard"
-version = "0.1.10"
+version = "0.1.2"
 
 java {
     toolchain {
